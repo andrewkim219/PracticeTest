@@ -76,6 +76,8 @@ function generateGraph(dates, counts) {
     const length = dates.length;
     const startDate = dates[0];
     const endDate = dates[length - 1];
+    const xSpacing = 650 / (length - 1);
+    const ySpacing = 350 / (max - min);
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
@@ -89,6 +91,14 @@ function generateGraph(dates, counts) {
     xAxis.setAttribute("stroke", "black");
     svg.appendChild(xAxis);
 
+    const xAxis2 = document.createElementNS(svgNS, "line");
+    xAxis2.setAttribute("x1", "50");
+    xAxis2.setAttribute("y1", "50");
+    xAxis2.setAttribute("x2", "700");
+    xAxis2.setAttribute("y2", "50");
+    xAxis2.setAttribute("stroke", "black");
+    svg.appendChild(xAxis2);
+
     const yAxis = document.createElementNS(svgNS, "line");
     yAxis.setAttribute("x1", "50");
     yAxis.setAttribute("y1", "400");
@@ -97,13 +107,56 @@ function generateGraph(dates, counts) {
     yAxis.setAttribute("stroke", "black");
     svg.appendChild(yAxis);
 
+    const yAxis2 = document.createElementNS(svgNS, "line");
+    yAxis2.setAttribute("x1", "700");
+    yAxis2.setAttribute("y1", "400");
+    yAxis2.setAttribute("x2", "700");
+    yAxis2.setAttribute("y2", "50");
+    yAxis2.setAttribute("stroke", "black");
+    svg.appendChild(yAxis2);
 
+    const minText = document.createElementNS(svgNS, "text");
+    minText.setAttribute("x", "30");
+    minText.setAttribute("y", "400");
+    minText.setAttribute("font-size", "20");
+    minText.textContent = min.toString();
+    svg.appendChild(minText);
 
+    const maxText = document.createElementNS(svgNS, "text");
+    maxText.setAttribute("x", "10");
+    maxText.setAttribute("y", "55");
+    maxText.setAttribute("font-size", "20");
+    maxText.textContent = max.toString();
+    svg.appendChild(maxText);
 
+    const start = document.createElementNS(svgNS, "text");
+    start.setAttribute("x", "40");
+    start.setAttribute("y", "430");
+    start.setAttribute("font-size", "20");
+    start.textContent = startDate;
+    svg.appendChild(start);
 
+    const end = document.createElementNS(svgNS, "text");
+    end.setAttribute("x", "650");
+    end.setAttribute("y", "430");
+    end.setAttribute("font-size", "20");
+    end.textContent = endDate;
+    svg.appendChild(end);
 
+    let visitPoints = "";
+    for (let i = 0; i < length; i++) {
+        const x = 50 + (i * xSpacing);
+        const y = 400 - (counts[i] - min) * ySpacing;
+        visitPoints += `${x} ${y} `;
+    }
 
-
+    const stats = document.createElementNS(svgNS, "polyline");
+    stats.setAttribute("points", visitPoints);
+    stats.setAttribute("stroke", "red");
+    stats.setAttribute("stroke-width", "2");
+    stats.setAttribute("fill", "none");
+    stats.setAttribute("stroke-linejoin", "round");
+    svg.appendChild(stats);
 
     graphContainer.appendChild(svg);
 }

@@ -1,15 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" >
-    <g clip-path="url(#body)">
-        <rect x="0" y="0" width="400" height="500" fill="red"/>
-        <ellipse cx="200" cy="500" rx="195" ry="335" fill="black"/>
-        <ellipse cx="200" cy="500" rx="165" ry="305" fill="white"/>
-
-    </g>
-
-    <defs>
-        <clipPath id="body">
-            <circle cx="200" cy="100" r="90" fill="none"/>
-        </clipPath>
-    </defs>
-
+<svg xmlns="http://www.w3.org/2000/svg" width="945" height="1013" >
+    <rect x="0" y="0" width="945" height="1013" fill="white"/>
+    <ellipse cx="378" cy="945" rx="369" ry="634" fill="black"/>
+    <circle cx="378" cy="189" r="227" fill="white"/>
+    <circle cx="378" cy="189" r="170" fill="black"/>
+    <ellipse cx="378" cy="945" rx="312" ry="575" fill="white"/>
 </svg>
