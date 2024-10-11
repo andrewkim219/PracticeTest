@@ -55,6 +55,7 @@ setFavicon();
 
 let dates = [];
 let counts = [];
+let length = 0;
 
 async function caseCounts() {
     const response = await fetch("https://cws.auckland.ac.nz/Qz2021JGC/api/CaseCounts");
@@ -65,6 +66,25 @@ async function caseCounts() {
         counts.push(value);
     })
     generateGraph(dates, counts);
+    length = dates.length;
+    populateItems(dates, counts);
+}
+
+function populateItems(dates, counts) {
+    const itemContainer = document.getElementById("itemContainer");
+    let odd = true;
+    for (let i = 0; i < length; i++) {
+        const block = document.createElement("div");
+        block.className = odd ? "odd" : "even";
+        const itemContent = `
+        <div>
+        <h2>${dates[i]}</h2>
+        <p>${counts[i]}</p>
+        `;
+        block.innerHTML = itemContent;
+        itemContainer.appendChild(block);
+        odd = !odd;
+    }
 }
 
 caseCounts();
@@ -81,7 +101,13 @@ function generateGraph(dates, counts) {
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("viewBox", "0 0 800 500");
+    svg.setAttribute("viewBox", "0 0 800 2000");
+
+    const rect = document.createElementNS(svgNS,"rect");
+    rect.setAttribute("width", "800");
+    rect.setAttribute("height", "2000");
+    rect.setAttribute("fill", "grey");
+    svg.appendChild(rect);
 
     const xAxis = document.createElementNS(svgNS, "line");
     xAxis.setAttribute("x1", "50");
